@@ -25,9 +25,14 @@
       color: red;
       font-weight: bold;
     }
+
+    #start {
+      font-size: 30px;
+    }
   </style>
 </head>
 <body>
+<h1>Check max memory for allocation</h1>
 <p id="output"></p>
 <p id="error"></p>
 <button id="start">Start</button>
@@ -38,13 +43,13 @@
     window.memoryBuffer = [];
     var outputElem = document.querySelector('#output');
     var errorElem = document.querySelector('#error');
-    var startElem = document.querySelector('#start');    
+    var startElem = document.querySelector('#start');
 
-    function toMB(value) {
-      return Math.floor(value / 1024 / 1024 * 100) / 100 + ' MB';
+    function toGB(value) {
+      return Math.floor(value / 1024 / 1024 * 1000) / 1000 + ' GB';
     }
 
-    var ITEM_SIZE = 1024 * 1024 * 1; // 10 MB
+    var ITEM_SIZE = 1024 * 1024 * 0.25;
 
     window.start = function() {
       startElem.style.display = 'none';
@@ -60,16 +65,17 @@
         }
 
         var html = [
-          'size: ' + toMB(memoryBuffer.length * ITEM_SIZE),
-          'usedJSHeapSize: ' + toMB(performance.memory.usedJSHeapSize),
-          'jsHeapSizeLimit: ' + toMB(performance.memory.jsHeapSizeLimit),
-          'totalJSHeapSize: ' + toMB(performance.memory.totalJSHeapSize)
-        ].join('<br/>');
+           navigator.deviceMemory ? 'navigator.deviceMemory: ' + navigator.deviceMemory + ' GB' : '',
+          'size: ' + toGB(memoryBuffer.length * ITEM_SIZE),
+          'usedJSHeapSize: ' + toGB(performance.memory.usedJSHeapSize),
+          'jsHeapSizeLimit: ' + toGB(performance.memory.jsHeapSizeLimit),
+          'totalJSHeapSize: ' + toGB(performance.memory.totalJSHeapSize)
+        ].filter(Boolean).join('<br/>');
 
          outputElem.innerHTML = html;
 
         localStorage.setItem('memory', html);
-      }, 10);
+      }, 5);
     }
 
     startElem.onclick = start;
