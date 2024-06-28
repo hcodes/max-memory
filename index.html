@@ -32,43 +32,48 @@
 <p id="error"></p>
 <button id="start">Start</button>
 <script>
-  console.log('Type "window.start()" for start allocation memory');
+  (function() {
+    console.log('Type "window.start()" for start allocation memory');
 
-  window.memoryBuffer = [];
-  var output = document.querySelector('#output');
-  var error = document.querySelector('#error');
+    window.memoryBuffer = [];
+    var outputElem = document.querySelector('#output');
+    var errorElem = document.querySelector('#error');
+    var startElem = document.querySelector('#start').onclick;    
 
-  function toMB(value) {
-    return Math.floor(value / 1024 / 1024 * 100) / 100 + ' MB';
-  }
+    function toMB(value) {
+      return Math.floor(value / 1024 / 1024 * 100) / 100 + ' MB';
+    }
 
-  var ITEM_SIZE = 1024 * 1024 * 1; // 10 MB
+    var ITEM_SIZE = 1024 * 1024 * 1; // 10 MB
 
-  function start() {
-    setInterval(() => {
-      var buffer;
+    window.start = function() {
+      startElem.style.display = 'none';
 
-      try {
-        buffer = new Uint8Array(ITEM_SIZE);
-        memoryBuffer.push(buffer);
-      } catch(e) {
-        error.innerHTML = e;
-      }
+      setInterval(() => {
+        var buffer;
 
-      var html = [
-        'size: ' + toMB(memoryBuffer.length * ITEM_SIZE),
-        'usedJSHeapSize: ' + toMB(performance.memory.usedJSHeapSize),
-        'jsHeapSizeLimit: ' + toMB(performance.memory.jsHeapSizeLimit),
-        'totalJSHeapSize: ' + toMB(performance.memory.totalJSHeapSize)
-      ].join('<br/>');
+        try {
+          buffer = new Uint8Array(ITEM_SIZE);
+          memoryBuffer.push(buffer);
+        } catch(e) {
+          errorElem.innerHTML = e;
+        }
 
-       output.innerHTML = html;
+        var html = [
+          'size: ' + toMB(memoryBuffer.length * ITEM_SIZE),
+          'usedJSHeapSize: ' + toMB(performance.memory.usedJSHeapSize),
+          'jsHeapSizeLimit: ' + toMB(performance.memory.jsHeapSizeLimit),
+          'totalJSHeapSize: ' + toMB(performance.memory.totalJSHeapSize)
+        ].join('<br/>');
 
-      localStorage.setItem('memory', html);
-    }, 10);
-  }
+         outputElem.innerHTML = html;
 
-  document.querySelector('#start').onclick = start;
+        localStorage.setItem('memory', html);
+      }, 10);
+    }
+
+    startElem.onclick = start;
+  })();
 </script>
 </body>
 </html>
