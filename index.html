@@ -58,7 +58,19 @@
       return '<b>' + Math.floor(value / 1024 / 1024 / 1024 * 1000) / 1000 + ' GB</b>';
     }
 
-    var ITEM_SIZE = 1024 * 1024 * 0.25;
+    function getItemSize(memory) {
+      if (memory === 8) {
+        return 1;
+      }
+
+      if (memory >= 4) {
+        return 0.5;
+      }
+
+      return 0.25;
+    }
+
+    var ITEM_SIZE = getItemSize(navigator.deviceMemory);
 
     window.start = function() {
       startElem.style.display = 'none';
