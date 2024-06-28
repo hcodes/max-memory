@@ -59,7 +59,7 @@
     }
 
     function getItemSize(memory) {
-      if (memory === 8) {
+      if (!memory || memory === 8) {
         return 1;
       }
 
