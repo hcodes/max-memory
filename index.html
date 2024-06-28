@@ -10,16 +10,33 @@
       font-size: 16px;
       color: white;
     }
+
+    body {
+      padding-top: 100px;
+      padding-left: 100px;
+    }
+
+    #output {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    #error {
+      color: red;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 <p id="output"></p>
+<p id="error"></p>
 <button id="start">Start</button>
 <script>
   console.log('Type "window.start()" for start allocation memory');
 
   window.memoryBuffer = [];
   var output = document.querySelector('#output');
+  var error = document.querySelector('#error');
 
   function toMB(value) {
     return Math.floor(value / 1024 / 1024 / 100) * 100 + ' MB';
@@ -29,8 +46,14 @@
 
   function start() {
     setInterval(() => {
-      var buffer = new Uint8Array(ITEM_SIZE);
-      memoryBuffer.push(buffer);
+      var buffer;
+
+      try {
+        buffer = new Uint8Array(ITEM_SIZE);
+        memoryBuffer.push(buffer);
+      } catch(e) {
+        error.innerHTML = e;
+      }
 
       var html = [
         'size: ' + toMB(memoryBuffer.length * ITEM_SIZE),
