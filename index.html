@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Max heap js size</title>
+  <title>How much memory can be allocated in browser?</title>
   <meta charset="utf-8" />
   <style>
     body, html {
@@ -31,18 +31,25 @@
   </style>
 </head>
 <body>
-<h1>Check max memory for allocation</h1>
+<h1>How much memory can be allocated in browser?</h1>
 <p id="output"></p>
 <p id="error"></p>
-<button id="start">Start</button>
+<button id="start">Start test</button>
 <script>
   (function() {
-    console.log('Type "window.start()" for start allocation memory');
+    console.log('Type "window.start()" for start process of allocation memory');
 
     window.memoryBuffer = [];
+
     var outputElem = document.querySelector('#output');
     var errorElem = document.querySelector('#error');
     var startElem = document.querySelector('#start');
+
+    var lastData;
+    try {
+      lastData = localStorage.getItem('test-memory');
+      outputElem.innerHTML = '<b>Last run:</b><br/><br/>' + lastData;
+    } catch(e) {}
 
     function toGB(value) {
       return '<b>' + Math.floor(value / 1024 / 1024 / 1024 * 1000) / 1000 + ' GB</b>';
@@ -73,7 +80,9 @@
 
          outputElem.innerHTML = html;
 
-        localStorage.setItem('memory', html);
+        try {
+          localStorage.setItem('test-memory', html);
+        } catch(e) {}
       }, 5);
     }
 
