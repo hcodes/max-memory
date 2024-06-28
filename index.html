@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Max heap js size</title>
+  <meta charset="utf-8" />
+  <style>
+    body, html {
+      padding: 0;
+      margin: 0;
+      background-color: black;
+      font-size: 16px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<p id="output"></p>
+<button id="start">Start</button>
+<script>
+  console.log('Type "window.start()" for start allocation memory');
+
+  window.memoryBuffer = [];
+  var output = document.querySelector('#output');
+
+  function toMB(value) {
+    return Math.floor(value / 1024 / 1024 / 100) * 100 + ' MB';
+  }
+
+  var ITEM_SIZE = 1024 * 1024 * 10; // 10 MB
+
+  function start() {
+    setInterval(() => {
+      var buffer = new Uint8Array(ITEM_SIZE);
+      memoryBuffer.push(buffer);
+
+      var html = [
+        'size: ' + toMB(memoryBuffer.length * ITEM_SIZE),
+        'usedJSHeapSize: ' + toMB(performance.memory.usedJSHeapSize),
+        'jsHeapSizeLimit: ' + toMB(performance.memory.jsHeapSizeLimit),
+        'totalJSHeapSize: ' + toMB(performance.memory.totalJSHeapSize)
+      ].join('<br/>');
+
+       output.innerHTML = html;
+
+      localStorage.setItem('memory', html);
+    }, 50);
+  }
+
+  document.querySelector('#start').onclick = start;
+</script>
+</body>
+</html>
