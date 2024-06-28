@@ -48,7 +48,10 @@
     var lastData;
     try {
       lastData = localStorage.getItem('test-memory');
-      outputElem.innerHTML = '<b>Last run:</b><br/><br/>' + lastData;
+
+      if (lastData) {
+        outputElem.innerHTML = '<b>Last run:</b><br/><br/>' + lastData;
+      }
     } catch(e) {}
 
     function toGB(value) {
