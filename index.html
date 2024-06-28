@@ -17,7 +17,6 @@
     }
 
     #output {
-      font-weight: bold;
       font-size: 20px;
     }
 
@@ -46,7 +45,7 @@
     var startElem = document.querySelector('#start');
 
     function toGB(value) {
-      return Math.floor(value / 1024 / 1024 * 1000) / 1000 + ' GB';
+      return '<b>' + Math.floor(value / 1024 / 1024 / 1024 * 1000) / 1000 + ' GB</b>';
     }
 
     var ITEM_SIZE = 1024 * 1024 * 0.25;
