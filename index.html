@@ -70,7 +70,7 @@
       return 0.25;
     }
 
-    var ITEM_SIZE = getItemSize(navigator.deviceMemory);
+    var ITEM_SIZE = 1024 * 1024 * getItemSize(navigator.deviceMemory);
 
     window.start = function() {
       startElem.style.display = 'none';
