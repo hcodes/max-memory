@@ -39,10 +39,10 @@
   var error = document.querySelector('#error');
 
   function toMB(value) {
-    return Math.floor(value / 1024 / 1024 / 100) * 100 + ' MB';
+    return Math.floor(value / 1024 / 1024 * 100) / 100 + ' MB';
   }
 
-  var ITEM_SIZE = 1024 * 1024 * 10; // 10 MB
+  var ITEM_SIZE = 1024 * 1024 * 1; // 10 MB
 
   function start() {
     setInterval(() => {
@@ -65,7 +65,7 @@
        output.innerHTML = html;
 
       localStorage.setItem('memory', html);
-    }, 50);
+    }, 10);
   }
 
   document.querySelector('#start').onclick = start;
