@@ -82,7 +82,7 @@
       return 0.1;
     }
 
-    var ITEM_SIZE = 1024 * 1024 * getItemSize(navigator.deviceMemory || 1);
+    var ITEM_SIZE = 1024 * 1024 * getItemSize(navigator.deviceMemory || 2);
 
     window.start = function() {
       startElem.style.display = 'none';
@@ -110,7 +110,7 @@
         try {
           localStorage.setItem('test-memory', html);
         } catch(e) {}
-      }, 5);
+      }, 1);
     }
 
     startElem.onclick = start;
