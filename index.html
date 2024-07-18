@@ -82,7 +82,7 @@
       return 0.1;
     }
 
-    var ITEM_SIZE = 1024 * 1024 * getItemSize(navigator.deviceMemory);
+    var ITEM_SIZE = 1024 * 1024 * getItemSize(navigator.deviceMemory || 1);
 
     window.start = function() {
       startElem.style.display = 'none';
@@ -100,9 +100,9 @@
         var html = [
            navigator.deviceMemory ? 'navigator.deviceMemory: ' + navigator.deviceMemory + ' GB' : '',
           'size: ' + toGB(memoryBuffer.length * ITEM_SIZE),
-          'usedJSHeapSize: ' + toGB(performance.memory.usedJSHeapSize),
-          'jsHeapSizeLimit: ' + toGB(performance.memory.jsHeapSizeLimit),
-          'totalJSHeapSize: ' + toGB(performance.memory.totalJSHeapSize)
+          performance.memory ? 'usedJSHeapSize: ' + toGB(performance.memory.usedJSHeapSize) : '',
+          performance.memory ? 'jsHeapSizeLimit: ' + toGB(performance.memory.jsHeapSizeLimit) : '',
+          performance.memory ? 'totalJSHeapSize: ' + toGB(performance.memory.totalJSHeapSize) : ''
         ].filter(Boolean).join('<br/>');
 
          outputElem.innerHTML = html;
