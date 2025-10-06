@@ -92,7 +92,7 @@
 
         try {
           buffer = new Uint8Array(ITEM_SIZE);
-          for (let i = 0; i < buffer.length; i++) {
+          for (var i = 0; i < buffer.length; i++) {
             buffer[i] = i;
           }
           memoryBuffer.push(buffer);
